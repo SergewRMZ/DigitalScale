@@ -1,4 +1,5 @@
 import { Commit } from "vuex";
+import WebSocketService from '@/api/ws-service';
 
 interface BasculaState {
   weight: number;
@@ -7,11 +8,13 @@ interface BasculaState {
   minWeight: number;
 }
 
+const webSocketService = new WebSocketService();
+
 const basculaStore = {
   namespaced: true,
 
   state: (): BasculaState => ({
-    weight: 3.12,
+    weight: 0,
     unit: 'Kg',
     maxWeight: 5,
     minWeight: 0,
@@ -35,7 +38,17 @@ const basculaStore = {
       const max = 5;
       const randomWeight = (Math.random() * max).toFixed(2);
       commit('updateWeight', parseFloat(randomWeight));
+    },
+
+    initWebSocket({ commit }: { commit: Commit }) {
+      console.log('Iniciar websocket');
+      webSocketService.connectWebSocket((data: any) => {
+        console.log(`Datos recibidos del WebSocket: ${data}`);
+        commit('updateWeight', parseFloat(data));
+      });
     }
+
+    
   },
 }
 
