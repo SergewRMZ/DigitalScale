@@ -1,14 +1,7 @@
 import { createStore } from 'vuex'
-
+import basculaStore from '@/views/store/basculaStore'
 export default createStore({
-  state: {
-  },
-  getters: {
-  },
-  mutations: {
-  },
-  actions: {
-  },
   modules: {
+    bascula: basculaStore,
   }
 })
