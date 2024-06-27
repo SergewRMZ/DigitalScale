@@ -30,24 +30,21 @@ const basculaStore = {
   mutations: {
     updateWeight(state: BasculaState, newWeight: number) {
       state.weight = newWeight;
+    },
+
+    setUnit(state: BasculaState, unit: string) {
+      state.unit = unit;
     }
   },
   
   actions: {
-    getWeight ({ commit }: { commit: Commit }) {
-      const max = 5;
-      const randomWeight = (Math.random() * max).toFixed(2);
-      commit('updateWeight', parseFloat(randomWeight));
-    },
-
-    initWebSocket({ commit }: { commit: Commit }) {
+    async initWebSocket({ commit }: { commit: Commit }) {
       console.log('Iniciar websocket');
       webSocketService.connectWebSocket((data: any) => {
         console.log(`Datos recibidos del WebSocket: ${data}`);
         commit('updateWeight', parseFloat(data));
       });
-    }
-
+    },
     
   },
 }
