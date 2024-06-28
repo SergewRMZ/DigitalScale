@@ -2,13 +2,6 @@
   <div
     class="d-flex flex-column justify-content-center align-items-center min-vh-100 background-gradient"
   >
-
-  <div class="w-75 d-flex justify-content-between mb-3">
-    <img src="@/assets/LogoESCOM.png" alt="Logo 1" class="img-fluid logo_img" style="width: 300px;">
-    <img src="@/assets/LogoIPN.png" alt="Logo 2" class="img-fluid logo_img" style="width: 200px;">
-  </div>
-
-
     <h2 class="font__bascula mb-3 animate__animated animate__pulse animate__slow animate__infinite"> Báscula Digital </h2>
     
     <div class="shadow-lg container-md display__bascula w-50 text-center py-5 mb-5"
@@ -36,13 +29,24 @@
         </div>
       </div>
     </div>
+
+    <button class="btn btn-success mt-3 w-25" @click="toogleWebSocket">
+      {{ isWebSocketConnected ? 'Apagar' : 'Encender' }}
+    </button>
   </div>
 </template>
 
 <script>
 import { mapActions, mapMutations, mapState } from "vuex";
+import WebSocketService from "@/api/ws-service";
 export default {
   name: "Bascula",
+
+  data () {
+    return {
+      isWebSocketConnected: false
+    }
+  },
 
   computed: {
     ...mapState('bascula', ['weight', 'unit', 'maxWeight', 'minWeight']),
@@ -79,12 +83,26 @@ export default {
   },
 
   methods: {
-    ...mapActions('bascula', ['getWeight', 'initWebSocket']),
+    ...mapActions('bascula', ['initWebSocket', 'sendDataPic', 'disconnect']),
     ...mapMutations('bascula', ['setUnit']),
+
+    async toogleWebSocket() {
+      if (this.isWebSocketConnected) {
+        await this.disconnect();
+        this.isWebSocketConnected = false;
+      } else {
+        await this.initWebSocket();
+        this.isWebSocketConnected = true;
+      }
+    }
   },
 
-  async created() {
-    await this.initWebSocket();
+  // async mounted() {
+  //   await this.initWebSocket();
+  // },
+
+  beforeUnmount() {
+    WebSocketService.getInstance().closeWebSocket();
   }
 };
 

@@ -1,7 +1,7 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-black">
     <div class="container">
-      <a class="navbar-brand" href="#">Logo</a>
+      <img src="@/assets/LogoESCOM.png" alt="Logo 1" class="img-fluid logo_img" style="width: 200px;">
       <button
         class="navbar-toggler"
         type="button"
@@ -16,14 +16,20 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
           <li class="nav-item">
-            <router-link class="nav-link" :to="{ name: 'home' }"
-              >Home</router-link
+            <router-link class="nav-link" :to="{ name: 'bascula' }"
+              >Báscula</router-link
             >
           </li>
 
           <li class="nav-item">
-            <router-link class="nav-link" :to="{ name: 'carta' }"
-              >Menú</router-link
+            <router-link class="nav-link" :to="{ name: 'sensor-temperatura' }"
+              >Temperatura</router-link
+            >
+          </li>
+
+          <li class="nav-item">
+            <router-link class="nav-link" :to="{ name: 'sensor-pulso' }"
+              >Pulsómetro</router-link
             >
           </li>
 
@@ -39,6 +45,7 @@ div a {
   margin: 0 20px;
   text-decoration: none;
   font-weight: bold;
+  font-size: 20px;
 }
 
 div .router-link-exact-active {

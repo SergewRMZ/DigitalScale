@@ -1,6 +1,7 @@
 
 <template>
-  <Home/>
+   <Navbar></Navbar>
+   <router-view></router-view>
 </template>
 
 <script lang="ts">
@@ -8,7 +9,7 @@
   export default defineComponent({
     name: 'App',
     components: {
-      Home: defineAsyncComponent(() => import(/* webpackChunkName: "Home" */ '@/views/Home.vue'))
+      Navbar: defineAsyncComponent(() => import(/* webpackChunkName: "Navbar" */ '@/views/components/Navbar.vue'))
     }
   });
 </script>

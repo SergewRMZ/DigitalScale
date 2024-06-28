@@ -1,12 +1,29 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
-import Home from '../views/Home.vue'
 
-const routes: Array<RouteRecordRaw> = [
+const routes: RouteRecordRaw[] = [
   {
-    path: '/',
-    name: 'home',
-    component: Home
+    path: '/bascula',
+    name: 'bascula',
+    component: () => import (/* webpackChunkName: "Home" */ '@/views/Bascula.vue')
   },
+
+  {
+    path: '/temperatura',
+    name: 'sensor-temperatura',
+    component: () => import (/* webpackChunkName: "Home" */ '@/views/Temperatura.vue')
+  },
+
+  {
+    path: '/pulsometro',
+    name: 'sensor-pulso',
+    component: () => import (/* webpackChunkName: "Home" */ '@/views/Pulsometro.vue')
+  },
+
+
+  {
+    path: '/:pathMatch(.*)*', // Catch-all route for undefined paths
+    redirect: { name: 'bascula' }
+  }
 ]
 
 const router = createRouter({
@@ -14,4 +31,4 @@ const router = createRouter({
   routes
 })
 
-export default router
+export default router;

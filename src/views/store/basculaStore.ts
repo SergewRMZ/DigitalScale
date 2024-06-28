@@ -8,8 +8,6 @@ interface BasculaState {
   minWeight: number;
 }
 
-const webSocketService = new WebSocketService();
-
 const basculaStore = {
   namespaced: true,
 
@@ -40,12 +38,16 @@ const basculaStore = {
   actions: {
     async initWebSocket({ commit }: { commit: Commit }) {
       console.log('Iniciar websocket');
-      webSocketService.connectWebSocket((data: any) => {
+      await WebSocketService.getInstance().connectWebSocket((data: any) => {
         console.log(`Datos recibidos del WebSocket: ${data}`);
         commit('updateWeight', parseFloat(data));
+        WebSocketService.getInstance().sendDataToServer('1');
       });
     },
-    
+
+    async disconnect({ commit }: {commit: Commit}) {
+      await WebSocketService.getInstance().closeWebSocket();
+    }
   },
 }
 
